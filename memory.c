@@ -14,6 +14,43 @@ void initialize_memory()
     memory_head->next = NULL;
 }
 
+void allocate_memory(int size)
+{
+
+    Block *current = memory_head;
+
+    while (current != NULL)
+    {
+
+        if (current->free && current->size >= size)
+        {
+
+            if (current->size > size)
+            {
+
+                Block *new_block = (Block *)malloc(sizeof(Block));
+
+                new_block->start = current->start + size;
+                new_block->size = current->size - size;
+                new_block->free = 1;
+                new_block->next = current->next;
+
+                current->next = new_block;
+            }
+
+            current->size = size;
+            current->free = 0;
+
+            printf("Allocated %d bytes at %d\n", size, current->start);
+            return;
+        }
+
+        current = current->next;
+    }
+
+    printf("Allocation failed: not enough memory\n");
+}
+
 void show_memory()
 {
     Block *current = memory_head;
