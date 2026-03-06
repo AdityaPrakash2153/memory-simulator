@@ -3,20 +3,25 @@
 #include "memory.h"
 
 Block *memory_head = NULL;
+Algorithm current_algo = FIRST_FIT;
+
+void set_algorithm(Algorithm algo)
+{
+    current_algo = algo;
+}
 
 void merge_free_blocks()
 {
 
     Block *current = memory_head;
 
-    while (current != NULL && current->next != NULL)
+    while (current && current->next)
     {
 
         if (current->free && current->next->free)
         {
 
             Block *temp = current->next;
-
             current->size += temp->size;
             current->next = temp->next;
 
@@ -39,41 +44,78 @@ void initialize_memory()
     memory_head->next = NULL;
 }
 
-void allocate_memory(int size)
+Block *find_first_fit(int size)
 {
 
     Block *current = memory_head;
 
-    while (current != NULL)
+    while (current)
+    {
+
+        if (current->free && current->size >= size)
+            return current;
+
+        current = current->next;
+    }
+
+    return NULL;
+}
+
+Block *find_best_fit(int size)
+{
+
+    Block *current = memory_head;
+    Block *best = NULL;
+
+    while (current)
     {
 
         if (current->free && current->size >= size)
         {
 
-            if (current->size > size)
-            {
-
-                Block *new_block = (Block *)malloc(sizeof(Block));
-
-                new_block->start = current->start + size;
-                new_block->size = current->size - size;
-                new_block->free = 1;
-                new_block->next = current->next;
-
-                current->next = new_block;
-            }
-
-            current->size = size;
-            current->free = 0;
-
-            printf("Allocated %d bytes at %d\n", size, current->start);
-            return;
+            if (best == NULL || current->size < best->size)
+                best = current;
         }
 
         current = current->next;
     }
 
-    printf("Allocation failed: not enough memory\n");
+    return best;
+}
+
+void allocate_memory(int size)
+{
+
+    Block *target = NULL;
+
+    if (current_algo == FIRST_FIT)
+        target = find_first_fit(size);
+    else
+        target = find_best_fit(size);
+
+    if (!target)
+    {
+        printf("Allocation failed\n");
+        return;
+    }
+
+    if (target->size > size)
+    {
+
+        Block *new_block = malloc(sizeof(Block));
+
+        new_block->start = target->start + size;
+        new_block->size = target->size - size;
+        new_block->free = 1;
+        new_block->next = target->next;
+
+        target->next = new_block;
+    }
+
+    target->size = size;
+    target->free = 0;
+
+    printf("Allocated %d bytes at %d\n", size, target->start);
 }
 
 void free_memory(int start)
@@ -81,10 +123,10 @@ void free_memory(int start)
 
     Block *current = memory_head;
 
-    while (current != NULL)
+    while (current)
     {
 
-        if (current->start == start && current->free == 0)
+        if (current->start == start && !current->free)
         {
 
             current->free = 1;
@@ -102,12 +144,14 @@ void free_memory(int start)
 
 void show_memory()
 {
+
     Block *current = memory_head;
 
     printf("\nMemory Layout:\n");
 
-    while (current != NULL)
+    while (current)
     {
+
         printf("Start: %d | Size: %d | %s\n",
                current->start,
                current->size,
@@ -122,9 +166,9 @@ void visualize_memory()
 
     Block *current = memory_head;
 
-    printf("\nMemory Visualization:\n");
+    printf("\n");
 
-    while (current != NULL)
+    while (current)
     {
 
         if (current->free)

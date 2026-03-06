@@ -40,6 +40,16 @@ int main()
 
             visualize_memory();
         }
+        else if (strcmp(command, "algo") == 0)
+        {
+
+            scanf("%s", command);
+
+            if (strcmp(command, "first") == 0)
+                set_algorithm(FIRST_FIT);
+            else if (strcmp(command, "best") == 0)
+                set_algorithm(BEST_FIT);
+        }
         else if (strcmp(command, "exit") == 0)
         {
 

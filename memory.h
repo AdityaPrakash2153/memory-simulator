@@ -9,10 +9,19 @@ typedef struct Block
     struct Block *next;
 } Block;
 
+typedef enum
+{
+    FIRST_FIT,
+    BEST_FIT
+} Algorithm;
+
 void initialize_memory();
 void show_memory();
 void visualize_memory();
+
 void allocate_memory(int size);
 void free_memory(int start);
+
+void set_algorithm(Algorithm algo);
 
 #endif
