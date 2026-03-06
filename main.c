@@ -1,18 +1,51 @@
 #include <stdio.h>
+#include <string.h>
 #include "memory.h"
 
 int main()
 {
 
+    char command[50];
+    int value;
+
     initialize_memory();
 
-    allocate_memory(200);
-    allocate_memory(300);
+    printf("Memory Allocation Simulator\n");
 
-    free_memory(0);
-    free_memory(200);
+    while (1)
+    {
 
-    show_memory();
+        printf("\n> ");
+        scanf("%s", command);
+
+        if (strcmp(command, "alloc") == 0)
+        {
+
+            scanf("%d", &value);
+            allocate_memory(value);
+        }
+        else if (strcmp(command, "free") == 0)
+        {
+
+            scanf("%d", &value);
+            free_memory(value);
+        }
+        else if (strcmp(command, "show") == 0)
+        {
+
+            show_memory();
+        }
+        else if (strcmp(command, "exit") == 0)
+        {
+
+            break;
+        }
+        else
+        {
+
+            printf("Unknown command\n");
+        }
+    }
 
     return 0;
 }
