@@ -12,5 +12,6 @@ typedef struct Block
 void initialize_memory();
 void show_memory();
 void allocate_memory(int size);
+void free_memory(int start);
 
 #endif

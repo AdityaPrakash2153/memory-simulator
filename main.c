@@ -9,6 +9,8 @@ int main()
     allocate_memory(200);
     allocate_memory(300);
 
+    free_memory(0);
+
     show_memory();
 
     return 0;

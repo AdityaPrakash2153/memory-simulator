@@ -51,11 +51,33 @@ void allocate_memory(int size)
     printf("Allocation failed: not enough memory\n");
 }
 
+void free_memory(int start)
+{
+
+    Block *current = memory_head;
+
+    while (current != NULL)
+    {
+
+        if (current->start == start && current->free == 0)
+        {
+
+            current->free = 1;
+            printf("Freed memory at %d\n", start);
+            return;
+        }
+
+        current = current->next;
+    }
+
+    printf("Invalid free request\n");
+}
+
 void show_memory()
 {
     Block *current = memory_head;
 
-    printf("Memory Layout:\n");
+    printf("\nMemory Layout:\n");
 
     while (current != NULL)
     {
