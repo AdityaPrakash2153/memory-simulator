@@ -116,3 +116,24 @@ void show_memory()
         current = current->next;
     }
 }
+
+void visualize_memory()
+{
+
+    Block *current = memory_head;
+
+    printf("\nMemory Visualization:\n");
+
+    while (current != NULL)
+    {
+
+        if (current->free)
+            printf("[Free %d]", current->size);
+        else
+            printf("[Alloc %d]", current->size);
+
+        current = current->next;
+    }
+
+    printf("\n");
+}

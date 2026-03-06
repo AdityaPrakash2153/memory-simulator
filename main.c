@@ -35,6 +35,11 @@ int main()
 
             show_memory();
         }
+        else if (strcmp(command, "viz") == 0)
+        {
+
+            visualize_memory();
+        }
         else if (strcmp(command, "exit") == 0)
         {
 
