@@ -4,6 +4,31 @@
 
 Block *memory_head = NULL;
 
+void merge_free_blocks()
+{
+
+    Block *current = memory_head;
+
+    while (current != NULL && current->next != NULL)
+    {
+
+        if (current->free && current->next->free)
+        {
+
+            Block *temp = current->next;
+
+            current->size += temp->size;
+            current->next = temp->next;
+
+            free(temp);
+        }
+        else
+        {
+            current = current->next;
+        }
+    }
+}
+
 void initialize_memory()
 {
     memory_head = (Block *)malloc(sizeof(Block));
@@ -64,6 +89,8 @@ void free_memory(int start)
 
             current->free = 1;
             printf("Freed memory at %d\n", start);
+
+            merge_free_blocks();
             return;
         }
 

@@ -10,6 +10,7 @@ int main()
     allocate_memory(300);
 
     free_memory(0);
+    free_memory(200);
 
     show_memory();
 
