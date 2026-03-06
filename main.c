@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include "memory.h"
+
 int main()
 {
-    printf("Hello World!");
+    initialize_memory();
+    show_memory();
     return 0;
 }
