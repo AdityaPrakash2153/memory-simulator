@@ -49,6 +49,8 @@ int main()
                 set_algorithm(FIRST_FIT);
             else if (strcmp(command, "best") == 0)
                 set_algorithm(BEST_FIT);
+            else if (strcmp(command, "worst") == 0)
+                set_algorithm(WORST_FIT);
         }
         else if (strcmp(command, "exit") == 0)
         {

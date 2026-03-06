@@ -12,7 +12,8 @@ typedef struct Block
 typedef enum
 {
     FIRST_FIT,
-    BEST_FIT
+    BEST_FIT,
+    WORST_FIT
 } Algorithm;
 
 void initialize_memory();

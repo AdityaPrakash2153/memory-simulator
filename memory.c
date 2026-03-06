@@ -83,6 +83,28 @@ Block *find_best_fit(int size)
     return best;
 }
 
+Block *find_worst_fit(int size)
+{
+
+    Block *current = memory_head;
+    Block *worst = NULL;
+
+    while (current)
+    {
+
+        if (current->free && current->size >= size)
+        {
+
+            if (worst == NULL || current->size > worst->size)
+                worst = current;
+        }
+
+        current = current->next;
+    }
+
+    return worst;
+}
+
 void allocate_memory(int size)
 {
 
@@ -90,8 +112,12 @@ void allocate_memory(int size)
 
     if (current_algo == FIRST_FIT)
         target = find_first_fit(size);
-    else
+
+    else if (current_algo == BEST_FIT)
         target = find_best_fit(size);
+
+    else if (current_algo == WORST_FIT)
+        target = find_worst_fit(size);
 
     if (!target)
     {
