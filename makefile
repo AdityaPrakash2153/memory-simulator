@@ -1,2 +1,14 @@
+CC=gcc
+CFLAGS=-Wall -Wextra
+
+TARGET=memsim
+SRC=main.c memory.c
+
 all:
-	gcc main.c memory.c
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+
+run: all
+	./$(TARGET)
+
+clean:
+	rm -f $(TARGET)

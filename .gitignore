@@ -1,1 +1,6 @@
+memsim
 a.out
+*.o
+*.exe
+.vscode/
+.DS_Store
