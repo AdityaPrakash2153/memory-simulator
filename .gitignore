@@ -1,6 +1,17 @@
+# Executables
 memsim
 a.out
-*.o
 *.exe
+
+# Object files
+*.o
+
+# IDE
 .vscode/
+.idea/
+
+# macOS
 .DS_Store
+
+# Windows
+Thumbs.db
